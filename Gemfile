@@ -20,6 +20,9 @@ source 'https://rubygems.org'
  gem 'bootstrap'
  gem 'figaro'
  gem 'pry'
+ gem 'devise'
+ gem 'twitter-bootstrap-rails'
+ gem 'devise-bootstrap-views'
 
  group :development, :test do
    gem 'byebug'
