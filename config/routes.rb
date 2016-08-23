@@ -1,6 +1,14 @@
 Rails.application.routes.draw do
-  
+
+  devise_for :users
+
   root 'welcome#about'
+
+  authenticated :user do
+    root to: 'users#show', as: :authenticated_root
+  end
+
+
 
 
   # The priority is based upon order of creation: first created -> highest priority.
