@@ -2,9 +2,8 @@ require 'rails_helper'
 
 RSpec.describe WikisController, type: :controller do
 
-  let(:my_wiki) { Wiki.create!( title: "New Wiki Title2",
-                                body:"This is the second body created",
-                                private: false)}
+  let(:my_user) { create(:user) }
+  let(:my_wiki) { create(:wiki, user: my_user)}
 
   describe "GET #index" do
     login_user
@@ -75,6 +74,8 @@ RSpec.describe WikisController, type: :controller do
       expect(wiki_instance.id).to eq my_wiki.id
       expect(wiki_instance.title).to eq my_wiki.title
       expect(wiki_instance.body).to eq my_wiki.body
+      expect(wiki_instance.user).to eq my_wiki.user
+
     end
 
   end
@@ -83,22 +84,25 @@ RSpec.describe WikisController, type: :controller do
     login_user
     it "increases the number of Wikis by 1" do
       expect{post :create, wiki: {title: "Third Title",
-                            body: "This is my third body",
-                            private: false}
+                                  body: "This is my third body",
+                                  private: false,
+                                  user: my_user}
               }.to change(Wiki, :count).by(1)
     end
 
     it "assigns the new wiki to @wiki" do
       post :create, wiki: {title: "The 4th Title",
                             body: "This is my 4th body",
-                            private: false}
+                            private: false,
+                            user: my_user}
       expect(assigns(:wiki)).to eq Wiki.last
     end
 
     it "redirects to the new wiki" do
       post :create, wiki: {title: "The 5th Title",
                             body: "This is my 5th body",
-                            private: false}
+                            private: false,
+                            user: my_user}
       expect(assigns(:wiki)).to redirect_to Wiki.last
     end
   end
