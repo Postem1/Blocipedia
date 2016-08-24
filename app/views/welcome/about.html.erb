@@ -8,4 +8,18 @@
 
       <%= link_to "Sign In", new_user_session_path, class: "btn btn-primary" %>
   <% end %>
+
+  <% if user_signed_in? %>
+    <li>
+        <%= link_to "Create a new wiki", new_wiki_path, class: "btn btn-success" %>
+    </li>
+    <br>
+    <li>
+        <%= link_to "View all wikis", wikis_path, class: "btn btn-info" %>
+    </li>
+    <br>
+    <li>
+        <%= link_to "Logout", destroy_user_session_path, method: :delete, class: "btn btn-danger" %>
+    </li>
+  <% end %>
 </div>
