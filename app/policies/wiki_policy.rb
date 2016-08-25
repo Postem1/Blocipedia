@@ -8,6 +8,7 @@ class WikiPolicy
 
   def update?
     @current_user.present?
+    @wiki.private == false || @wiki.user == @current_user || @current_user.admin? 
   end
 
   def destroy?

@@ -15,7 +15,7 @@ class UsersController < ApplicationController
   def update
     @user = User.find(params[:id])
     authorize @user
-    if @user.update_attributes(secure_params)
+    if @user.update_attributes(secure_user_params)
       flash[:notice] = "Successfully updated user"
       redirect_to users_path
     else
@@ -38,7 +38,7 @@ class UsersController < ApplicationController
 
   private
 
-  def secure_params
+  def secure_user_params
     params.require(:user).permit(:role)
   end
 end

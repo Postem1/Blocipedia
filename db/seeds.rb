@@ -8,7 +8,7 @@
 require 'faker'
 
 # Create Users
-10.times do
+20.times do
   user = User.new(
         email:  Faker::Internet.email,
         password: 'password'
@@ -27,11 +27,11 @@ u.skip_confirmation!
 u.save!
 
 # Create Wikis
-10.times do
+40.times do
   wiki = Wiki.create(
         title:  Faker::StarWars.character,
         body: Faker::Lorem.paragraph,
-        private: [false, true].sample,
+        private: false,
         user: users.sample
   )
 end
