@@ -10,4 +10,8 @@ class WikiPolicy
     @current_user.present?
   end
 
+  def destroy?
+    @current_user.admin?
+  end
+
 end
