@@ -15,16 +15,16 @@ require 'faker'
   )
   user.skip_confirmation!
   user.save!
-
-  steeve = User.new(
-        email:  'spostemus@gmail.com',
-        password: 'password'
-  )
-  steeve.skip_confirmation!
-  steeve.save!
-
 end
 users = User.all
+
+u = User.new(
+      email:  "spostemus@gmail.com",
+      password: 'password',
+      role: 2
+)
+u.skip_confirmation!
+u.save!
 
 # Create Wikis
 10.times do
