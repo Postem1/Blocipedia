@@ -1,0 +1,18 @@
+<h1>Edit Wiki</h1>
+
+<div class="row">
+
+  <div class="col-md-4">
+    <p>Guidelines for Wikis</p>
+      <ul>
+        <li>Be Truthful.</li>
+        <li>Be Accurate (as possible).</li>
+        <li>Have fun.</li>
+      </ul>
+  </div>
+
+  <div class="col-md-8">
+    <%= render partial: 'form', locals: { wiki: @wiki } %>
+  </div>
+
+</div>
