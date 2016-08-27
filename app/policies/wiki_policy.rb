@@ -15,15 +15,15 @@ class WikiPolicy
   end
 
   def new?
-    true
+    current_user.present?
   end
 
   def create?
-    true
+    current_user.present?
   end
 
   def edit?
-    true
+    current_user.present? && (wiki.private == false || wiki.user == current_user || current_user.admin?)
   end
 
   def update?
@@ -31,7 +31,7 @@ class WikiPolicy
   end
 
   def destroy?
-    current_user.admin?
+    current_user.present? && (wiki.private == false || wiki.user == current_user || current_user.admin?)
   end
 
 end
