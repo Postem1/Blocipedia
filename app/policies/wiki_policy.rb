@@ -23,11 +23,17 @@ class WikiPolicy
   end
 
   def edit?
-    true
+          wiki.private == false ||
+          wiki.user == current_user ||
+          current_user.admin? ||
+          current_user.premium?
   end
 
   def update?
-    current_user.present? && (wiki.private == false || wiki.user == current_user || current_user.admin?)
+          wiki.private == false ||
+          wiki.user == current_user ||
+          current_user.admin? ||
+          current_user.premium?
   end
 
   def destroy?

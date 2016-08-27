@@ -18,23 +18,48 @@ require 'faker'
 end
 users = User.all
 
-u = User.new(
-      email:  "spostemus@gmail.com",
+admin = User.new(
+      email:  "admin@example.com",
       password: 'password'
 )
-u.admin!
-u.skip_confirmation!
-u.save!
+admin.admin!
+admin.skip_confirmation!
+admin.save!
+
+#Create a premium member
+premium = User.create!(
+  email:    'premium@example.com',
+  password: 'password'
+  )
+  premium.premium!
+  premium.skip_confirmation!
+  premium.save!
+
+  #Create a premium member
+  standard = User.create!(
+    email:    'standard@example.com',
+    password: 'password'
+    )
+    standard.premium!
+    standard.skip_confirmation!
+    standard.save!
 
 # Create Wikis
 40.times do
   wiki = Wiki.create(
-        title:  Faker::StarWars.character,
+        title:  Faker::Lorem.sentence,
         body: Faker::Lorem.paragraph,
         private: false,
         user: users.sample
   )
 end
+
+private_wiki = Wiki.create(
+      title:  "Private Wiki",
+      body: Faker::Lorem.paragraph,
+      private: true,
+      user: users.sample
+)
   wikis = Wiki.all
 
 puts "Seed finished"

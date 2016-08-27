@@ -10,6 +10,14 @@
   <% end %>
 
   <% if user_signed_in? %>
+
+    <% if current_user.role == 'standard' %>
+    <ul><%= link_to "Upgrade to Premium", new_charge_path, class: "btn btn-primary" %></ul>
+    <% end %>
+    <% if current_user.role == 'premium' %>
+    <ul><%= link_to "Downgrade to Standard", edit_user_registration_path(current_user), class: 'btn btn-danger' %></ul>
+    <% end %>
+    <br>
     <ul>
         <%= link_to "Create a new wiki", new_wiki_path, class: "btn btn-success" %>
     </ul>

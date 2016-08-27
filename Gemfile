@@ -25,6 +25,8 @@ source 'https://rubygems.org'
  gem 'twitter-bootstrap-rails'
  gem 'devise-bootstrap-views'
  gem "pundit"
+ gem 'stripe'
+
 
 
  group :development, :test do
