@@ -107,41 +107,69 @@ RSpec.describe WikisController, type: :controller do
     end
   end
 
-  describe "PUT #update" do
-    login_user
-    it "updates wiki with expected attributes" do
-      new_title = "This is a new title"
-      new_body = "This is a new body"
+  context "admin user" do
+    describe "PUT #update" do
+      login_admin
+      it "updates wiki with expected attributes for admin users" do
+        new_title = "This is a new title"
+        new_body = "This is a new body"
 
-      put :update, id: my_wiki.id, wiki: {title: new_title, body: new_body}
+        put :update, id: my_wiki.id, wiki: {title: new_title, body: new_body}
 
-      updated_wiki = assigns(:wiki)
+        updated_wiki = assigns(:wiki)
 
-      expect(updated_wiki.id).to eq my_wiki.id
-      expect(updated_wiki.title).to eq new_title
-      expect(updated_wiki.body).to eq new_body
+        expect(updated_wiki.id).to eq my_wiki.id
+        expect(updated_wiki.title).to eq new_title
+        expect(updated_wiki.body).to eq new_body
+      end
+
+      it "redirects to the updated wiki" do
+        new_title = "This is a new title"
+        new_body = "This is a new body"
+
+        put :update, id: my_wiki.id, wiki: {title: new_title, body: new_body}
+        expect(response).to redirect_to my_wiki
+      end
     end
 
-    it "redirects to the updated wiki" do
-      new_title = "This is a new title"
-      new_body = "This is a new body"
+    describe "DELETE #destroy" do
+      login_admin
+      it "deletes the wiki for admin users" do
+        delete :destroy, {id: my_wiki.id}
+        count = Wiki.where({id: my_wiki.id}).size
+        expect(count).to eq 0
+      end
 
-      put :update, id: my_wiki.id, wiki: {title: new_title, body: new_body}
-      expect(response).to redirect_to my_wiki
+      it "redirects to root_path" do
+        delete :destroy, {id: my_wiki.id}
+        expect(response).to redirect_to root_path
+      end
     end
   end
 
-  describe "DELETE #destroy" do
-    login_user
-    it "deletes the wiki" do
-      delete :destroy, {id: my_wiki.id}
-      count = Wiki.where({id: my_wiki.id}).size
-      expect(count).to eq 0
-    end
+  context "standard user" do
+    describe "PUT #update" do
+      login_user
+      it "updates wiki with expected attributes users" do
+        new_title = "This is a new title"
+        new_body = "This is a new body"
 
-    it "redirects to root_path" do
-      delete :destroy, {id: my_wiki.id}
-      expect(response).to redirect_to root_path
+        put :update, id: my_wiki.id, wiki: {title: new_title, body: new_body}
+
+        updated_wiki = assigns(:wiki)
+
+        expect(updated_wiki.id).to eq my_wiki.id
+        expect(updated_wiki.title).to eq new_title
+        expect(updated_wiki.body).to eq new_body
+      end
+
+      it "redirects to the updated wiki" do
+        new_title = "This is a new title"
+        new_body = "This is a new body"
+
+        put :update, id: my_wiki.id, wiki: {title: new_title, body: new_body}
+        expect(response).to redirect_to my_wiki
+      end
     end
   end
 end

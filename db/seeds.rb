@@ -20,9 +20,9 @@ users = User.all
 
 u = User.new(
       email:  "spostemus@gmail.com",
-      password: 'password',
-      role: 2
+      password: 'password'
 )
+u.admin!
 u.skip_confirmation!
 u.save!
 
