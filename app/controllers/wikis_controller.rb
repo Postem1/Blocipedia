@@ -1,12 +1,16 @@
 class WikisController < ApplicationController
 
   def index
-    @wikis = Wiki.all
+    @wikis = Wiki.visible_to(current_user.admin? || current_user.premium?)
     authorize @wikis
   end
 
   def show
     @wiki = Wiki.find(params[:id])
+    unless @wiki.private == false || current_user.id == @wiki.user_id || current_user.premium? || current_user.admin?
+      flash[:alert] = "You are not currently allowed to view private wikis."
+      redirect_to root_path
+    end
     authorize @wiki
   end
 

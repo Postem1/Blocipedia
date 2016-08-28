@@ -6,13 +6,14 @@ RSpec.describe UsersController, type: :controller do
   let(:my_admin_user) { create(:admin) }
   let(:my_premium_user) { create(:premium) }
 
-  let(:my_wiki) { create(:wiki, user: my_user)}
-  let(:my_private_wiki) { create(:wiki, user: my_premium_user, private: true)}
-
   context "premium user" do
 
     describe "POST #downgrade" do
     login_premium
+    before do
+       @private_wiki = Wiki.create!(title: "A test title", body: "A test body",
+                                    private: false, user: my_premium_user)
+    end
 
       it "downgrades the user to a standard role" do
         put :downgrade, {id: my_premium_user.id}
