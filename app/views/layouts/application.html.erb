@@ -47,33 +47,20 @@
         </button>
 
         <%= link_to "Blocipedia", root_path, class: "navbar-brand" %>
+
         <% if user_signed_in? %>
-            <div class= "pull-right">
-              <div class= "btn btn-success">
-                <%= current_user.email %> |
-                <%= current_user.role.titleize %> Account 
+              <div class= "pull-right">
+                <div class= "btn btn-success">
+                  <%= current_user.email %> |
+                  <%= current_user.role.titleize %> Account
+                </div>
+                <%= link_to "Logout", destroy_user_session_path, class: "btn btn-warning",
+                                                              method: :delete %>
               </div>
-            </div>
-            <% end %>
+        <% end %>
 
         <div class="navbar-collapse collapse navbar-responsive-collapse">
           <ul class="nav navbar-nav">
-            <% if user_signed_in? %>
-                <li>
-                  <%= link_to "Logout", destroy_user_session_path, method: :delete %>
-                </li>
-                <% end %>
-
-            <% if !user_signed_in? %>
-              <li>
-                <%= link_to "Sign Up", new_user_registration_path %>
-              </li>
-
-              <li>
-                <%= link_to "Sign In", new_user_session_path %>
-              </li>
-            <% end %>
-
           </ul>
         </div>
       </div>

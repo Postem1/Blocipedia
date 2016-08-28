@@ -18,7 +18,7 @@ module ControllerMacros
   def login_premium
     before(:each) do
       @request.env["devise.mapping"] = Devise.mappings[:premium]
-      admin = FactoryGirl.create(:premium)
+      premium = FactoryGirl.create(:premium)
       sign_in premium, scope: :user
     end
   end

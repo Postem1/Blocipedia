@@ -15,7 +15,7 @@ describe WikiPolicy do
   end
 
   permissions :edit? do
-    it "grants access if wiki is public" do
+    it "grants access to standard user if wiki is public" do
       expect(subject).to permit(FactoryGirl.create(:user), Wiki.create(private: false))
     end
   end

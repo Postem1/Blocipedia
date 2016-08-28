@@ -1,6 +1,5 @@
 class UsersController < ApplicationController
   before_filter :authenticate_user!
-  after_action :verify_authorized
 
   def index
     @users = User.all
@@ -34,6 +33,25 @@ class UsersController < ApplicationController
       flash.now[:alert] = "There was an error deleting this user.  Try again"
       redirect_to users_path
     end
+  end
+
+  def downgrade
+    @user = User.find(params[:id])
+    @user.role = 'standard'
+
+    if @user.save
+      flash[:notice] = "You've been downgraded to standard. Your private wikis are now public."
+      redirect_to root_path
+    else
+      flash.now[:alert] = "There was an error editing your account. Please try again."
+      redirect_to :back
+    end
+
+    @user_wikis = @user.wikis.where(private: true)
+
+      @user_wikis.each do |wiki|
+      wiki.update_attributes(private: false)
+     end
   end
 
   private

@@ -3,7 +3,12 @@ require 'rails_helper'
 RSpec.describe WikisController, type: :controller do
 
   let(:my_user) { create(:user) }
+  let(:my_admin_user) { create(:admin) }
+  let(:my_premium_user) { create(:premium) }
+
   let(:my_wiki) { create(:wiki, user: my_user)}
+  let(:my_private_wiki) { create(:wiki, user: my_premium_user, private: true)}
+
 
   describe "GET #index" do
     login_user

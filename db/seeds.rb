@@ -35,12 +35,12 @@ premium = User.create!(
   premium.skip_confirmation!
   premium.save!
 
-  #Create a premium member
+  #Create a standard member
   standard = User.create!(
     email:    'standard@example.com',
     password: 'password'
     )
-    standard.premium!
+    standard.standard!
     standard.skip_confirmation!
     standard.save!
 

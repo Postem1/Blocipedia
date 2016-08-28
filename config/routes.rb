@@ -8,6 +8,12 @@ Rails.application.routes.draw do
 
   resources :users
 
+  resources :users do
+    member do
+      post :downgrade
+    end
+  end
+
   resources :charges, only: [:new, :create]
 
   # The priority is based upon order of creation: first created -> highest priority.
