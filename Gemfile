@@ -26,6 +26,7 @@ source 'https://rubygems.org'
  gem 'devise-bootstrap-views'
  gem "pundit"
  gem 'stripe'
+ gem 'redcarpet'
 
 
 

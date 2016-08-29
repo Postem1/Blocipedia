@@ -60,6 +60,26 @@ private_wiki = Wiki.create(
       private: true,
       user: users.sample
 )
+
+md_wiki = Wiki.create(
+  title: "My Markdown List Wiki",
+  private: false,
+  user: users.last,
+  body:
+  %Q{### *My List of Things To Do!*
+
+  Here is the list of things I wish to do!
+
+  * _write more posts_
+  * write even more posts
+  * ~~write even more posts!~~
+
+```
+puts 'hello world'
+```
+}
+)
+
   wikis = Wiki.all
 
 puts "Seed finished"
