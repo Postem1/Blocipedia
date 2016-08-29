@@ -1,5 +1,11 @@
 Rails.application.routes.draw do
 
+  get 'collaborators/new'
+
+  get 'collaborators/create'
+
+  get 'collaborators/destroy'
+
   devise_for :users
 
   root 'welcome#about'
