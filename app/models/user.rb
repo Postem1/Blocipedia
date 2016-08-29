@@ -11,6 +11,17 @@ class User < ActiveRecord::Base
     self.role ||= :standard
   end
 
+  after_update :publicize_wikis
+
+  def publicize_wikis
+    if self.role == 'standard'
+      user_wikis = self.wikis.where(private: true)
+      user_wikis.each do |wiki|
+      wiki.update_attributes(private: false)
+      end
+    end
+  end
+
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable and :omniauthable
   devise :database_authenticatable, :registerable, :confirmable,
