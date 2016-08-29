@@ -5,5 +5,6 @@ FactoryGirl.define do
     title { Faker::Company.name }
     body { Faker::Lorem.paragraph }
     private false
+    user
   end
 end
