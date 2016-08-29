@@ -4,13 +4,18 @@ Rails.application.routes.draw do
 
   root 'welcome#about'
 
-  authenticated :user do
-    root to: 'users#show', as: :authenticated_root
-  end
-
   resources :wikis
 
   resources :users
+
+  resources :users do
+    member do
+      post :downgrade
+    end
+  end
+
+  resources :charges, only: [:new, :create]
+
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 

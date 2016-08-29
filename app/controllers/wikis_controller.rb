@@ -1,22 +1,29 @@
 class WikisController < ApplicationController
 
   def index
-    @wikis = Wiki.all
+    @wikis = Wiki.visible_to(current_user.admin? || current_user.premium?)
     authorize @wikis
   end
 
   def show
     @wiki = Wiki.find(params[:id])
+    unless @wiki.private == false || current_user.id == @wiki.user_id || current_user.premium? || current_user.admin?
+      flash[:alert] = "You are not currently allowed to view private wikis."
+      redirect_to root_path
+    end
     authorize @wiki
   end
 
   def new
+    @user = current_user
     @wiki = Wiki.new
     authorize @wiki
   end
 
   def create
+    @user = current_user
     @wiki = Wiki.new(wiki_params)
+    @wiki.user = current_user
       if @wiki.save
         flash[:notice] = "Wiki was saved successfully"
         redirect_to @wiki
@@ -61,6 +68,6 @@ class WikisController < ApplicationController
   private
 
   def wiki_params
-    params.require(:wiki).permit(:title, :body, :private)
+    params.require(:wiki).permit(:title, :body, :private, :user_id)
   end
 end

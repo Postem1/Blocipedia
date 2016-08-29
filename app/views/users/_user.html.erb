@@ -6,7 +6,7 @@
   <%= form_for user do |f| %>
       <%= f.select(:role, User.roles.keys.map { |role| [role.titleize,role]}) %>
     <td>
-      <button><%f.submit  %>Change role</button>
+      <button><% f.submit %>Change role</button>
     </td>
   <% end %>
 </td>

@@ -23,15 +23,24 @@ class WikiPolicy
   end
 
   def edit?
-    current_user.present? && (wiki.private == false || wiki.user == current_user || current_user.admin?)
+          current_user.present? && (
+          wiki.private == false ||
+          wiki.user == current_user ||
+          current_user.admin? ||
+          current_user.premium?
+          )
   end
 
   def update?
-    current_user.present? && (wiki.private == false || wiki.user == current_user || current_user.admin?)
+          current_user.present? && (
+          wiki.private == false ||
+          wiki.user == current_user ||
+          current_user.admin? ||
+          current_user.premium?
+          )
   end
 
   def destroy?
-    current_user.present? && (wiki.private == false || wiki.user == current_user || current_user.admin?)
+    current_user.present? && (wiki.user == current_user || current_user.admin?)
   end
-
 end

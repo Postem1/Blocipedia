@@ -1,4 +1,7 @@
 class User < ActiveRecord::Base
+
+  before_save { self.email = email.downcase }
+
   has_many :wikis
 
   enum role: [:standard, :premium, :admin ]
