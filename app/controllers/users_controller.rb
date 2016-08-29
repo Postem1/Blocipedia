@@ -46,12 +46,6 @@ class UsersController < ApplicationController
       flash.now[:alert] = "There was an error editing your account. Please try again."
       redirect_to :back
     end
-
-    @user_wikis = @user.wikis.where(private: true)
-
-      @user_wikis.each do |wiki|
-      wiki.update_attributes(private: false)
-     end
   end
 
   private
