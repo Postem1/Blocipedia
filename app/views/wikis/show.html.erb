@@ -7,6 +7,12 @@
     <p><strong>Created by <%= @wiki.user.email %></strong></p>
   </div>
 
+  <% if @wiki.private %>
+    <% if Collaborator.exists?(wiki_id: @wiki) %>
+      <%= render partial: 'collaborators/users' %>
+    <% end %>
+  <% end %>
+
   <div class="col-md-4">
     <% if @wiki.private == false || (current_user.admin? || current_user.premium?) %>
       <%= link_to "Edit Wiki", edit_wiki_path(@wiki), class: 'btn btn-success' %>
