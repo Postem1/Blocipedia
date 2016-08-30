@@ -4,11 +4,13 @@ class CollaboratorsController < ApplicationController
     @users = User.all
     @wiki = Wiki.find(params[:wiki_id])
     @collaborator = Collaborator.new
+    authorize @collaborator
   end
 
   def create
     @wiki = Wiki.find(params[:wiki_id])
     @collaborator = @wiki.collaborators.build(collaborator_params)
+    authorize @collaborator
 
     if @collaborator.save
         flash[:notice] = "Successfully created/added to collaboratorating team"
@@ -21,6 +23,7 @@ class CollaboratorsController < ApplicationController
 
   def destroy
     @collaborator = Collaborator.find(params[:id])
+    authorize @collaborator
 
     if @collaborator.destroy
       flash[:notice] = " #{@collaborator.user.email}  was removed from this wiki."
@@ -29,6 +32,7 @@ class CollaboratorsController < ApplicationController
       flash[:alert] = "Collaborator was not removed. Please try again."
       redirect_to root_path
     end
+
   end
 
   private
