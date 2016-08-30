@@ -49,7 +49,7 @@ premium = User.create!(
   wiki = Wiki.create(
         title:  Faker::Lorem.sentence,
         body: Faker::Lorem.paragraph,
-        private: false,
+        private: [false, true].sample,
         user: users.sample
   )
 end
@@ -82,6 +82,15 @@ puts 'hello world'
 
   wikis = Wiki.all
 
+#Create collaborators
+  80.times do
+    collab = Collaborator.create(
+              user: users.sample,
+              wiki: wikis.sample
+    )
+  end
+
 puts "Seed finished"
 puts "#{User.count} users created"
 puts "#{Wiki.count} wikis created"
+puts "#{Collaborator.count} collaborators created"
