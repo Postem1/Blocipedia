@@ -6,11 +6,11 @@ class WikisController < ApplicationController
 
   def show
     @wiki = Wiki.find(params[:id])
-    unless @wiki.private == false || current_user.id == @wiki.user_id || current_user.premium? || current_user.admin?
-      flash[:alert] = "You are not currently allowed to view private wikis."
+    authorize @wiki
+    unless @wiki.private == false || current_user.id == @wiki.user_id || current_user.admin? || @wiki.collaborators.include?(current_user)
+      flash[:alert] = "You are not currently allowed to view this private wiki."
       redirect_to root_path
     end
-    authorize @wiki
   end
 
   def new
@@ -23,6 +23,7 @@ class WikisController < ApplicationController
     @user = current_user
     @wiki = Wiki.new(wiki_params)
     @wiki.user = current_user
+    authorize @wiki
       if @wiki.save
         flash[:notice] = "Wiki was saved successfully"
         redirect_to @wiki
@@ -30,7 +31,6 @@ class WikisController < ApplicationController
         flash.now[:alert] = "There was an error creating this wiki.  Please try again"
         render :new
       end
-      authorize @wiki
   end
 
   def edit
@@ -40,6 +40,7 @@ class WikisController < ApplicationController
 
   def update
     @wiki = Wiki.find(params[:id])
+    authorize @wiki
     @wiki.assign_attributes(wiki_params)
     if @wiki.save
       flash[:notice] = "Successfully updated \"#{@wiki.title}\""
@@ -48,12 +49,11 @@ class WikisController < ApplicationController
       flash.now[:alert] = "There was an error updating this wiki.  Please try again"
       render :edit
     end
-    authorize @wiki
-
   end
 
   def destroy
     @wiki = Wiki.find(params[:id])
+    authorize @wiki
     if @wiki.destroy
       flash[:notice] = "\"#{@wiki.title}\" was successfully deleted"
       redirect_to root_path
@@ -61,7 +61,6 @@ class WikisController < ApplicationController
       flash.now[:alert] = "There was an error deleting this wiki.  Try again"
       render :show
     end
-    authorize @wiki
   end
 
   private

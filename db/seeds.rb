@@ -8,7 +8,7 @@
 require 'faker'
 
 # Create Users
-20.times do
+10.times do
   user = User.new(
         email:  Faker::Internet.email,
         password: 'password'
@@ -31,6 +31,7 @@ premium = User.create!(
   email:    'premium@example.com',
   password: 'password'
   )
+
   premium.premium!
   premium.skip_confirmation!
   premium.save!
@@ -44,12 +45,24 @@ premium = User.create!(
     standard.skip_confirmation!
     standard.save!
 
+  #Create another premium member
+  premium2 = User.create!(
+    email:    'premium2@example.com',
+    password: 'password'
+    )
+
+    premium2.premium!
+    premium2.skip_confirmation!
+    premium2.save!
+
+
+
 # Create Wikis
 40.times do
   wiki = Wiki.create(
         title:  Faker::Lorem.sentence,
         body: Faker::Lorem.paragraph,
-        private: [false, true].sample,
+        private: false,
         user: users.sample
   )
 end
@@ -58,8 +71,16 @@ private_wiki = Wiki.create(
       title:  "Private Wiki",
       body: Faker::Lorem.paragraph,
       private: true,
-      user: users.sample
+      user: users.last
 )
+
+private_wiki2 = Wiki.create(
+      title:  "Private Wiki2",
+      body: Faker::Lorem.paragraph,
+      private: true,
+      user: users.last
+)
+
 
 md_wiki = Wiki.create(
   title: "My Markdown List Wiki",
@@ -82,15 +103,6 @@ puts 'hello world'
 
   wikis = Wiki.all
 
-#Create collaborators
-  80.times do
-    collab = Collaborator.create(
-              user: users.sample,
-              wiki: wikis.sample
-    )
-  end
-
 puts "Seed finished"
 puts "#{User.count} users created"
 puts "#{Wiki.count} wikis created"
-puts "#{Collaborator.count} collaborators created"

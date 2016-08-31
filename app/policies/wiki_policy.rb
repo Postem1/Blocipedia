@@ -7,11 +7,19 @@ class WikiPolicy
   end
 
   def index?
-    true
+    wiki.private == false ||
+    wiki.user == current_user ||
+    current_user.admin? ||
+    wiki.collaborators.include?(user_id: current_user.id)
   end
 
   def show?
-    true
+    current_user.present? && (
+    wiki.private == false ||
+    wiki.user == current_user ||
+    current_user.admin? ||
+    wiki.collaborators.include?(user_id: current_user.id)
+    )
   end
 
   def new?
@@ -27,7 +35,7 @@ class WikiPolicy
           wiki.private == false ||
           wiki.user == current_user ||
           current_user.admin? ||
-          current_user.premium?
+          wiki.collaborators.include?(user_id: current_user.id)
           )
   end
 
@@ -36,7 +44,7 @@ class WikiPolicy
           wiki.private == false ||
           wiki.user == current_user ||
           current_user.admin? ||
-          current_user.premium?
+          wiki.collaborators.include?(user_id: current_user.id)
           )
   end
 

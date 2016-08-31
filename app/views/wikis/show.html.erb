@@ -10,15 +10,13 @@
 
   <div class="col-md-4">
     <div class="see_collaborators">
-      <% if @wiki.user == current_user || current_user.admin? %>
         <% if Collaborator.exists?(wiki_id: @wiki) %>
           <%= render partial: 'collaborators/users' %>
         <% end %>
-      <% end %>
     </div>
 
     <div class="edits">
-      <% if @wiki.private == false || (current_user.admin? || @wiki.user_id == current_user.id || @wiki.collaborators.include?(user_id: current_user.id)) %>
+      <% if @wiki.private == false || (current_user.admin? || @wiki.user_id == current_user.id || @wiki.collaborators.include?(current_user)) %>
         <%= link_to "Edit Wiki", edit_wiki_path(@wiki), class: 'btn btn-success' %>
       <% end %>
 
