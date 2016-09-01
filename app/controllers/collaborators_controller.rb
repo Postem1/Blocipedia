@@ -2,7 +2,8 @@ class CollaboratorsController < ApplicationController
 
   def new
     @wiki = Wiki.find(params[:wiki_id])
-    @collaborator = Collaborator.new
+    @collaborator = Collaborator.new(wiki_id: @wiki.id)
+
     authorize @collaborator
     # unless (@wiki.private == true && current_user == @wiki.user) || current_user.admin?
     #   flash[:alert] = "You are not currently allowed to perform this action"
@@ -13,6 +14,7 @@ class CollaboratorsController < ApplicationController
   def create
     @wiki = Wiki.find(params[:wiki_id])
     @collaborator = @wiki.collaborators.build(collaborator_params)
+    
     authorize @collaborator
     # unless (@wiki.private == true && current_user == @wiki.user) || current_user.admin?
     #   flash[:alert] = "You are not currently allowed to perform this action."
@@ -29,8 +31,10 @@ class CollaboratorsController < ApplicationController
   end
 
   def destroy
-    @collaborator = Collaborator.find(params[:id])
     @wiki = Wiki.find(params[:wiki_id])
+    @user = current_user
+    @collaborator = Collaborator.find(params[:id])
+
     authorize @collaborator
     # unless current_user.id == @wiki.user.id || current_user.admin?
     #   flash[:alert] = "You are not currently allowed to perform this action."

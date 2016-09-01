@@ -7,15 +7,19 @@
      @collaborator = model
    end
 
+   def wiki_owner?
+    current_user.present? && ((collaborator.wiki.user == current_user) || current_user.admin?)
+   end
+
    def new?
-      current_user.present? && (current_user.admin? || current_user.premium? )
+     wiki_owner?
    end
 
    def create?
-     current_user.present? && (current_user.admin? || current_user.premium?)
+     wiki_owner?
    end
 
    def destroy?
-     current_user.present? && (current_user.premium? || current_user.admin?)
+     wiki_owner?
   end
 end
