@@ -8,7 +8,7 @@
 require 'faker'
 
 # Create Users
-20.times do
+10.times do
   user = User.new(
         email:  Faker::Internet.email,
         password: 'password'
@@ -31,6 +31,7 @@ premium = User.create!(
   email:    'premium@example.com',
   password: 'password'
   )
+
   premium.premium!
   premium.skip_confirmation!
   premium.save!
@@ -43,6 +44,18 @@ premium = User.create!(
     standard.standard!
     standard.skip_confirmation!
     standard.save!
+
+  #Create another premium member
+  premium2 = User.create!(
+    email:    'premium2@example.com',
+    password: 'password'
+    )
+
+    premium2.premium!
+    premium2.skip_confirmation!
+    premium2.save!
+
+
 
 # Create Wikis
 40.times do
@@ -58,8 +71,16 @@ private_wiki = Wiki.create(
       title:  "Private Wiki",
       body: Faker::Lorem.paragraph,
       private: true,
-      user: users.sample
+      user: users.last
 )
+
+private_wiki2 = Wiki.create(
+      title:  "Private Wiki2",
+      body: Faker::Lorem.paragraph,
+      private: true,
+      user: users.last
+)
+
 
 md_wiki = Wiki.create(
   title: "My Markdown List Wiki",
