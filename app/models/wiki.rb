@@ -11,7 +11,7 @@ class Wiki < ActiveRecord::Base
 
   def available_users
     available = []
-    User.order(email: :asc).each do |user|
+    User.all.each do |user|
       available << user unless self.users.include?(user)
     end
     return available
