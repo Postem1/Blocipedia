@@ -5,8 +5,10 @@ class WikisController < ApplicationController
   end
 
   def show
+    @user = current_user
     @wiki = Wiki.find(params[:id])
     authorize @wiki
+    #use policy_scope(Wiki) ?
     unless @wiki.private == false || current_user.id == @wiki.user_id || current_user.admin? || @wiki.users.include?(current_user)
       flash[:alert] = "You are not currently allowed to view this private wiki."
       redirect_to root_path

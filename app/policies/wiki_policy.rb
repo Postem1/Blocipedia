@@ -6,20 +6,19 @@ class WikiPolicy
     @wiki = model
   end
 
-  def index?
+  def wiki_editor?
     wiki.private == false ||
     wiki.user == current_user ||
     current_user.admin? ||
     wiki.users.include?(current_user)
   end
 
+  def index?
+    wiki_editor?
+  end
+
   def show?
-    current_user.present? && (
-    wiki.private == false ||
-    wiki.user == current_user ||
-    current_user.admin? ||
-    wiki.users.include?(current_user)
-    )
+   wiki_editor?
   end
 
   def new?
@@ -31,21 +30,11 @@ class WikiPolicy
   end
 
   def edit?
-          current_user.present? && (
-          wiki.private == false ||
-          wiki.user == current_user ||
-          current_user.admin? ||
-          wiki.users.include?(current_user)
-          )
+    current_user.present? && wiki_editor?
   end
 
   def update?
-          current_user.present? && (
-          wiki.private == false ||
-          wiki.user == current_user ||
-          current_user.admin? ||
-          wiki.users.include?(current_user)
-          )
+    current_user.present? && wiki_editor?
   end
 
   def destroy?
@@ -60,7 +49,7 @@ class WikiPolicy
       @user = user
       @scope = scope
     end
-  
+
     def resolve
       wikis = []
       if user.role == 'admin'
