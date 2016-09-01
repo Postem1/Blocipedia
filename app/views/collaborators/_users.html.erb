@@ -8,7 +8,6 @@
 
   <div class="col-md-4">
     <% if policy(@wiki).destroy? %>
-    <%# if @wiki.user == current_user || current_user.admin? %>
       <%= link_to "Delete Collaborator", wiki_collaborator_path(@wiki, collab), method: :delete, class: 'btn btn-danger',
               data: {confirm: 'Are you sure you want to delete this collaborator?'} %>
     <% end %>

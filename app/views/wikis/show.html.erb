@@ -17,12 +17,10 @@
 
     <div class="edits">
        <% if policy(@wiki).edit? %>
-      <%# if @wiki.private == false || (current_user.admin? || @wiki.user == current_user || @wiki.users.include?(current_user)) %>
         <%= link_to "Edit Wiki", edit_wiki_path(@wiki), class: 'btn btn-success' %>
       <% end %>
 
       <% if policy(@wiki).destroy? %>
-      <%# if current_user.admin? || (@wiki.user_id == current_user.id) %>
         <%= link_to "Delete Wiki", @wiki, method: :delete, class: 'btn btn-danger', data: {confirm: 'Are you sure you want to delete this wiki?'} %>
       <% end %>
     </div>
