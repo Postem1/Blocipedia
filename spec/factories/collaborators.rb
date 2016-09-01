@@ -1,6 +1,7 @@
+
 FactoryGirl.define do
   factory :collaborator do
-    user nil
-    wiki nil
+    user
+    wiki 
   end
 end
