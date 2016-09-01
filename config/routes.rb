@@ -16,6 +16,10 @@ Rails.application.routes.draw do
 
   resources :charges, only: [:new, :create]
 
+  resources :wikis do
+    resources :collaborators, only: [:new, :create, :destroy]
+  end
+
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 
