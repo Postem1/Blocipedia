@@ -1,5 +1,4 @@
 class ApplicationController < ActionController::Base
-
   protect_from_forgery with: :exception
 
   # Prevent CSRF attacks by raising an exception.
@@ -13,6 +12,6 @@ class ApplicationController < ActionController::Base
 
   def user_not_authorized
     flash[:alert] = "Access Denied."
-    redirect_to (request.referrer || root_path)
+    redirect_to(request.referer || root_path)
   end
 end
