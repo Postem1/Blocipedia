@@ -1,3 +1,4 @@
+
 <h1><%= markdown(@wiki.title) %></h1>
 
 <div class="row">
@@ -8,12 +9,20 @@
   </div>
 
   <div class="col-md-4">
-    <% if @wiki.private == false || (current_user.admin? || current_user.premium?) %>
-      <%= link_to "Edit Wiki", edit_wiki_path(@wiki), class: 'btn btn-success' %>
-    <% end %>
+    <div class="see_collaborators">
+        <% if Collaborator.exists?(wiki_id: @wiki) %>
+          <%= render partial: 'collaborators/users' %>
+        <% end %>
+    </div>
 
-    <% if current_user.admin? || (@wiki.user_id == current_user.id) %>
-      <%= link_to "Delete Wiki", @wiki, method: :delete, class: 'btn btn-danger', data: {confirm: 'Are you sure you want to delete this wiki?'} %>
-    <% end %>
+    <div class="edits">
+      <% if @wiki.private == false || (current_user.admin? || @wiki.user == current_user || @wiki.users.include?(current_user)) %>
+        <%= link_to "Edit Wiki", edit_wiki_path(@wiki), class: 'btn btn-success' %>
+      <% end %>
+
+      <% if current_user.admin? || (@wiki.user_id == current_user.id) %>
+        <%= link_to "Delete Wiki", @wiki, method: :delete, class: 'btn btn-danger', data: {confirm: 'Are you sure you want to delete this wiki?'} %>
+      <% end %>
+    </div>
   </div>
 </div>
