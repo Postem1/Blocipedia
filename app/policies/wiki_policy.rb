@@ -6,7 +6,7 @@ class WikiPolicy
     @wiki = model
   end
 
-  def wiki_editor?
+  def wiki_viewer?
     wiki.private == false ||
     wiki.user == current_user ||
     current_user.admin? ||
@@ -14,11 +14,11 @@ class WikiPolicy
   end
 
   def index?
-    wiki_editor?
+    wiki_viewer?
   end
 
   def show?
-   wiki_editor?
+   wiki_viewer?
   end
 
   def new?
@@ -30,11 +30,11 @@ class WikiPolicy
   end
 
   def edit?
-    current_user.present? && wiki_editor?
+    current_user.present? && wiki_viewer?
   end
 
   def update?
-    current_user.present? && wiki_editor?
+    current_user.present? && wiki_viewer?
   end
 
   def destroy?

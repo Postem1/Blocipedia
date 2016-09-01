@@ -3,7 +3,7 @@ class CollaboratorsController < ApplicationController
   def new
     @wiki = Wiki.find(params[:wiki_id])
     @collaborator = Collaborator.new
-
+    authorize @collaborator
     unless (@wiki.private == true && current_user == @wiki.user) || current_user.admin?
       flash[:alert] = "You are not currently allowed to perform this action"
       redirect_to root_path
@@ -13,7 +13,7 @@ class CollaboratorsController < ApplicationController
   def create
     @wiki = Wiki.find(params[:wiki_id])
     @collaborator = @wiki.collaborators.build(collaborator_params)
-
+    authorize @collaborator
     unless (@wiki.private == true && current_user == @wiki.user) || current_user.admin?
       flash[:alert] = "You are not currently allowed to perform this action."
       redirect_to root_path
@@ -31,7 +31,7 @@ class CollaboratorsController < ApplicationController
   def destroy
     @collaborator = Collaborator.find(params[:id])
     @wiki = Wiki.find(params[:wiki_id])
-
+    authorize @collaborator
     unless current_user.id == @wiki.user.id || current_user.admin?
       flash[:alert] = "You are not currently allowed to perform this action."
       redirect_to root_path
