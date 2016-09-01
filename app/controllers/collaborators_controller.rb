@@ -4,7 +4,7 @@ class CollaboratorsController < ApplicationController
     @wiki = Wiki.find(params[:wiki_id])
     @collaborator = Collaborator.new
 
-    unless current_user == @wiki.user || current_user.admin?
+    unless (@wiki.private == true && current_user == @wiki.user) || current_user.admin?
       flash[:alert] = "You are not currently allowed to perform this action"
       redirect_to root_path
     end
@@ -14,7 +14,7 @@ class CollaboratorsController < ApplicationController
     @wiki = Wiki.find(params[:wiki_id])
     @collaborator = @wiki.collaborators.build(collaborator_params)
 
-    unless current_user == @wiki.user || current_user.admin?
+    unless (@wiki.private == true && current_user == @wiki.user) || current_user.admin?
       flash[:alert] = "You are not currently allowed to perform this action."
       redirect_to root_path
     end

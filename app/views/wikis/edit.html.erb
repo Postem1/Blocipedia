@@ -16,7 +16,7 @@
 </div>
 
 <div class="collab">
-  <% if current_user == @wiki.user || current_user.admin? %>
+  <% if (@wiki.private == true && current_user == @wiki.user) || current_user.admin? %>
     <%= link_to 'Add Collaborator', new_wiki_collaborator_path(@wiki), class:"btn btn-info" %>
   <% end %>
 </div>

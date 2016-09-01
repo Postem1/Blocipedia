@@ -15,7 +15,5 @@ class Wiki < ActiveRecord::Base
       available << user unless self.users.include?(user)
     end
     return available
-end
-
-
+  end
 end
