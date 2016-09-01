@@ -12,7 +12,7 @@ RSpec.describe CollaboratorsController, type: :controller do
   let(:my_collabo) {create(:collaborator, wiki: my_private_wiki, user: my_user)}
 
   describe "GET #new" do
-    login_premium
+    login_admin
 
     it "returns http success" do
       get :new, wiki_id: my_private_wiki.id
@@ -31,7 +31,7 @@ RSpec.describe CollaboratorsController, type: :controller do
   end
 
   describe "POST #create" do
-    login_premium
+    login_admin
 
     it "increases the number of collaborators by 1" do
       expect{post :create, wiki_id: my_private_wiki.id, collaborator: {wiki: my_private_wiki, user: my_user}
@@ -50,7 +50,7 @@ RSpec.describe CollaboratorsController, type: :controller do
   end
 
   describe "DELETE #destroy" do
-    login_premium
+    login_admin
 
     it "deletes the collaborator" do
       delete :destroy, wiki_id: my_private_wiki.id, id: my_collabo.id
