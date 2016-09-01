@@ -1,7 +1,6 @@
 class CollaboratorsController < ApplicationController
 
   def new
-    @users = User.all
     @wiki = Wiki.find(params[:wiki_id])
     @collaborator = Collaborator.new
 
@@ -9,7 +8,6 @@ class CollaboratorsController < ApplicationController
       flash[:alert] = "You are not currently allowed to perform this action"
       redirect_to root_path
     end
-
   end
 
   def create

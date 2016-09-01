@@ -9,4 +9,13 @@ class Wiki < ActiveRecord::Base
 
   scope :visible_to, -> (user) { user ? all : where(private: false) }
 
+  def available_users
+    available = []
+    User.order(email: :asc).each do |user|
+      available << user unless self.users.include?(user)
+    end
+    return available
+end
+
+
 end
