@@ -8,9 +8,9 @@ class WikiPolicy
 
   def wiki_viewer?
     wiki.private == false ||
-    wiki.user == current_user ||
-    current_user.admin? ||
-    wiki.users.include?(current_user)
+      wiki.user == current_user ||
+      current_user.admin? ||
+      wiki.users.include?(current_user)
   end
 
   def index?
@@ -18,7 +18,7 @@ class WikiPolicy
   end
 
   def show?
-   wiki_viewer?
+    wiki_viewer?
   end
 
   def new?
@@ -41,7 +41,6 @@ class WikiPolicy
     current_user.present? && (wiki.user == current_user || current_user.admin?)
   end
 
-
   class Scope
     attr_reader :user, :scope
 
@@ -58,12 +57,13 @@ class WikiPolicy
         all_wikis = scope.all
         all_wikis.each do |wiki|
           if wiki.private == false || wiki.user == user || wiki.users.include?(user)
-            wikis << wiki # if the user is premium, only show them public wikis, or private wikis they created, or private wikis they are a collaborator on
+            wikis << wiki # if the user is premium, only show them public wikis, or private wikis they created,
+            # or private wikis they are a collaborator on
           end
         end
       else # this is the lowly standard user
         all_wikis = scope.all
-        wikis = [] #is this needed?
+        wikis = [] # is this needed?
         all_wikis.each do |wiki|
           if wiki.private == false || wiki.users.include?(user)
             wikis << wiki # only show standard users public wikis and private wikis they are a collaborator on

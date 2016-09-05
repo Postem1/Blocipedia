@@ -1,5 +1,4 @@
 class WikisController < ApplicationController
-
   def index
     @wikis = policy_scope(Wiki)
   end
@@ -21,13 +20,13 @@ class WikisController < ApplicationController
     @wiki = Wiki.new(wiki_params)
     @wiki.user = current_user
     authorize @wiki
-      if @wiki.save
-        flash[:notice] = "Wiki was saved successfully"
-        redirect_to @wiki
-      else
-        flash.now[:alert] = "There was an error creating this wiki.  Please try again"
-        render :new
-      end
+    if @wiki.save
+      flash[:notice] = "Wiki was saved successfully"
+      redirect_to @wiki
+    else
+      flash.now[:alert] = "There was an error creating this wiki.  Please try again"
+      render :new
+    end
   end
 
   def edit
