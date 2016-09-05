@@ -28,6 +28,7 @@ gem 'devise-bootstrap-views'
 gem "pundit"
 gem 'stripe'
 gem 'redcarpet'
+gem 'friendly_id'
 
 group :development, :test do
   gem 'byebug'
