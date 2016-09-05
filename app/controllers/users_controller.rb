@@ -16,10 +16,10 @@ class UsersController < ApplicationController
     authorize @user
     if @user.update_attributes(secure_user_params)
       flash[:notice] = "Successfully updated user"
-      redirect_to users_path
+      redirect_to users_path # rubocop:disable Style/IdenticalConditionalBranches
     else
       flash.notice[:alert] = "There was an error updating this user.  Please try again"
-      redirect_to users_path
+      redirect_to users_path # rubocop:disable Style/IdenticalConditionalBranches
     end
   end
 
@@ -28,10 +28,10 @@ class UsersController < ApplicationController
     authorize user
     if user.destroy
       flash[:notice] = "User was successfully deleted"
-      redirect_to users_path
+      redirect_to users_path # rubocop:disable Style/IdenticalConditionalBranches
     else
       flash.now[:alert] = "There was an error deleting this user.  Try again"
-      redirect_to users_path
+      redirect_to users_path # rubocop:disable Style/IdenticalConditionalBranches
     end
   end
 

@@ -1,5 +1,5 @@
 module ApplicationHelper
-  def markdown(text)
+  def markdown(text) # rubocop:disable Metrics/MethodLength
     options = {
       filter_html:     true,
       hard_wrap:       true,
@@ -16,6 +16,6 @@ module ApplicationHelper
 
     renderer = Redcarpet::Render::HTML.new(options)
     markdown = Redcarpet::Markdown.new(renderer, extensions)
-    markdown.render(text).html_safe
+    markdown.render(text).html_safe # rubocop:disable Rails/OutputSafety
   end
 end

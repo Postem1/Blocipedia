@@ -1,5 +1,5 @@
 class ChargesController < ApplicationController
-  def create
+  def create # rubocop:disable Metrics/AbcSize, Metrics/MethodLength
     @user = current_user
     # Creates a Stripe Customer object, for associating
     # with the charge
@@ -9,7 +9,7 @@ class ChargesController < ApplicationController
     )
 
     # Where the real magic happens
-    charge = Stripe::Charge.create(
+    charge = Stripe::Charge.create( # rubocop:disable Lint/UselessAssignment
       customer: customer.id, # Note -- this is NOT the user_id in your app
       amount: 15_00,
       description: "Blocipedia Membership - #{current_user.email}",

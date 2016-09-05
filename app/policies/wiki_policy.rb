@@ -49,7 +49,7 @@ class WikiPolicy
       @scope = scope
     end
 
-    def resolve
+    def resolve # rubocop:disable Metrics/MethodLength, Metrics/PerceivedComplexity, Metrics/CyclomaticComplexity, Metrics/AbcSize, Metrics/LineLength
       wikis = []
       if user.role == 'admin'
         wikis = scope.all # if the user is an admin, show them all the wikis

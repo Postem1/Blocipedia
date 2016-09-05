@@ -15,7 +15,7 @@ class WikisController < ApplicationController
     authorize @wiki
   end
 
-  def create
+  def create # rubocop:disable Metrics/MethodLength
     @user = current_user
     @wiki = Wiki.new(wiki_params)
     @wiki.user = current_user
