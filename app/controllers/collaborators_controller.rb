@@ -1,12 +1,12 @@
 class CollaboratorsController < ApplicationController
   def new
-    @wiki = Wiki.find(params[:wiki_id])
+    @wiki = Wiki.friendly.find(params[:wiki_id])
     @collaborator = Collaborator.new(wiki_id: @wiki.id)
     authorize @collaborator
   end
 
-  def create
-    @wiki = Wiki.find(params[:wiki_id])
+  def create # rubocop:disable Metrics/AbcSize
+    @wiki = Wiki.friendly.find(params[:wiki_id])
     @collaborator = @wiki.collaborators.build(collaborator_params)
     authorize @collaborator
     if @collaborator.save
@@ -18,8 +18,8 @@ class CollaboratorsController < ApplicationController
     end
   end
 
-  def destroy
-    @wiki = Wiki.find(params[:wiki_id])
+  def destroy # rubocop:disable Metrics/AbcSize
+    @wiki = Wiki.friendly.find(params[:wiki_id])
     @collaborator = Collaborator.find(params[:id])
     authorize @collaborator
     if @collaborator.destroy

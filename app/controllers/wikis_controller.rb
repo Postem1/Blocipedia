@@ -5,7 +5,7 @@ class WikisController < ApplicationController
 
   def show
     @user = current_user
-    @wiki = Wiki.find(params[:id])
+    @wiki = Wiki.friendly.find(params[:id])
     authorize @wiki
   end
 
@@ -15,7 +15,7 @@ class WikisController < ApplicationController
     authorize @wiki
   end
 
-  def create
+  def create # rubocop:disable Metrics/MethodLength
     @user = current_user
     @wiki = Wiki.new(wiki_params)
     @wiki.user = current_user
@@ -30,12 +30,12 @@ class WikisController < ApplicationController
   end
 
   def edit
-    @wiki = Wiki.find(params[:id])
+    @wiki = Wiki.friendly.find(params[:id])
     authorize @wiki
   end
 
   def update
-    @wiki = Wiki.find(params[:id])
+    @wiki = Wiki.friendly.find(params[:id])
     authorize @wiki
     @wiki.assign_attributes(wiki_params)
     if @wiki.save
@@ -48,7 +48,7 @@ class WikisController < ApplicationController
   end
 
   def destroy
-    @wiki = Wiki.find(params[:id])
+    @wiki = Wiki.friendly.find(params[:id])
     authorize @wiki
     if @wiki.destroy
       flash[:notice] = "\"#{@wiki.title}\" was successfully deleted"
@@ -62,6 +62,6 @@ class WikisController < ApplicationController
   private
 
   def wiki_params
-    params.require(:wiki).permit(:title, :body, :private, :user_id)
+    params.require(:wiki).permit(:title, :body, :private, :user_id, :slug)
   end
 end
